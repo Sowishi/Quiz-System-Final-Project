@@ -1,5 +1,120 @@
 {% extends "base.html" %} {% block content %}
 
-<h1>This is a create quiz screen</h1>
+<div class="container mt-5">
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="createQuiz"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Quiz</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="create-quiz">
+            <input
+              type="text"
+              class="form-control"
+              name="title"
+              id="title"
+              placeholder="Enter your quiz title"
+            />
+            <div
+              class="w-100 d-flex justify-content-end align-items-center mt-3"
+            >
+              <button type="submit" class="btn btn-primary">Create Quiz</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="w-100 d-flex justify-content-end align-items-center">
+    <button
+      type="button"
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#createQuiz"
+    >
+      Create Quiz
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card" style="width: 18rem">
+        <img class="card-img-top" src="..." alt="Card image cap" />
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <form style="min-width: 300px" action="/create" method="post">
+    <h2>Question</h2>
+    <div class="form-group">
+      <textarea
+        name="question"
+        class="form-control"
+        id="question"
+        rows="3"
+      ></textarea>
+    </div>
+    <div class="row my-3">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Choice A</label>
+          <input type="text" class="form-control" name="a" id="a" />
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Choice B</label>
+          <input type="text" class="form-control" name="b" id="b" />
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Choice C</label>
+          <input type="text" class="form-control" name="c" id="c" />
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Choice D</label>
+          <input type="text" class="form-control" name="d" id="d" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 d-flex justify-content-center align-items-center">
+        <button type="submit" class="btn btn-primary px-5 my-2">Submit!</button>
+      </div>
+      <div class="col-lg-6 d-flex justify-content-center align-items-center">
+        <button type="submit" class="btn btn-success px-5 my-2">
+          Finish Creating Quiz?
+        </button>
+      </div>
+    </div>
+  </form> -->
+</div>
 {%endblock %}
