@@ -9,8 +9,23 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template('index.html')
+    invalid = request.args.get('invalid', default='', type=str)
+    return render_template('index.html', invalid=invalid)
 
+@app.route("/login", methods=["POST"])
+def login():
+
+    username = request.form.get("username")
+    password = request.form.get("password")
+    print(username, password)
+
+    if(username == "admin" and password == "admin"):
+        return redirect(url_for('createQuiz'))
+    return redirect(url_for('home', invalid=True))
+
+
+
+    
 
 @app.route("/take",  methods=["POST", "GET"])
 def take():
