@@ -1,5 +1,7 @@
 from flask import Flask, render_template, url_for, request, g, redirect
 import sqlite3
+import random
+
 
 app = Flask(__name__)
 
@@ -24,7 +26,7 @@ def take():
         ''')
         res = cursor.execute("SELECT * FROM quizzes").fetchall()
         
-        return render_template("take.html", quizzes = res)
+        return render_template("take.html", quizzes = res,  bgColor=generate_random_color)
 
 
 @app.route("/take-quiz/<int:quiz_number>",  methods=["GET"])
@@ -47,7 +49,7 @@ def takeQuiz(quiz_number):
             );
         ''')
         res = cursor.execute(f"SELECT * FROM questions WHERE quizID = {quiz_number}").fetchall()
-        return render_template("take-quiz.html", quiz_number = quiz_number, questions=res, quiz_title=quiz_title)
+        return render_template("take-quiz.html", quiz_number = quiz_number, questions=res, quiz_title=quiz_title, )
     
 @app.route("/create-quiz", methods=["POST", "GET"])
 def createQuiz():
@@ -76,8 +78,10 @@ def createQuiz():
             );
         ''')
         res = cursor.execute("SELECT * FROM quizzes").fetchall()
+
         
-        return render_template("create.html", quizzes = res)
+        return render_template("create.html", quizzes = res, bgColor=generate_random_color
+)
 
 @app.route("/edit-quiz/<int:quiz_number>", methods=["POST", "GET"])
 def editQuiz(quiz_number):
@@ -150,7 +154,10 @@ def score(quiz_number):
 
         return render_template("score.html", score=score, numberOfQuestions=numberOfQuestions, questions=res)
 
-
+def generate_random_color():
+    # Generate a random hexadecimal color code
+    color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
+    return color
 # Database Connection
 def get_db():
     db = getattr(g, '_database', None)

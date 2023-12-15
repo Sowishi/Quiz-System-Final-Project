@@ -5,8 +5,8 @@
   <div class="row">
     {% for quiz in quizzes %}
     <div class="col-lg-4">
-      <div class="card" style="width: 18rem">
-        <div class="card-body">
+      <div class="card" style="width: 18rem; background: {{bgColor()}}">
+        <div class="card-body text-white">
           <h5 class="card-title">{{quiz.1}}</h5>
           <p class="card-text">{{quiz.2}}</p>
           <a
