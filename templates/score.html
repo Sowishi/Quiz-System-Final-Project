@@ -1,5 +1,85 @@
 {% extends "base.html" %} {% block content %}
 
-<h1>Score</h1>
+<div
+  class="container-fluid d-flex justify-content-center align-items-center flex-column"
+  style="height: 85vh"
+>
+  <h1 class="fw-bold display-1">
+    Score: <span class="text-success"> {{score}}</span> /
+    <span>{{numberOfQuestions}}</span>
+  </h1>
+  <div class="container mt-5">
+    <h1 class="text-center fw-bold">Here's the correct answer!</h1>
+
+    {% if questions %}
+    <div class="row">
+      {% for question in questions %}
+      <div class="col-lg-4">
+        <div class="form-group p-3 border border-secondary rounded">
+          <h5>{{question.2}}</h5>
+        </div>
+        <div class="row my-3">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="exampleInputPassword1">Choice A</label>
+              <input
+                disabled
+                value="{{question.3}}"
+                type="text"
+                class="form-control {% if question.7 == 'a' %}bg-success text-white fw-bold{% endif %}"
+                name="a"
+                id="a"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="exampleInputPassword1">Choice B</label>
+              <input
+                disabled
+                value="{{question.4}}"
+                type="text"
+                class="form-control {% if question.7 == 'b' %}bg-success text-white fw-bold{% endif %}"
+                name="b"
+                id="b"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="exampleInputPassword1">Choice C</label>
+              <input
+                disabled
+                value="{{question.5}}"
+                type="text"
+                class="form-control {% if question.7 == 'c' %}bg-success text-white fw-bold{% endif %}"
+                name="c"
+                id="c"
+              />
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="exampleInputPassword1">Choice D</label>
+              <input
+                disabled
+                value="{{question.6}}"
+                type="text"
+                class="form-control {% if question.7 == 'd' %}bg-success text-white fw-bold{% endif %}"
+                name="d"
+                id="d"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endfor %}
+    </div>
+
+    {% else %}
+    <p>No questions available.</p>
+    {% endif %}
+  </div>
+</div>
 
 {%endblock %}

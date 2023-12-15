@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="container my-5">
-  <h1 class="text-center fw-bold display-3 my-5">{{quizTitle}}</h1>
+  <h1 class="text-center fw-bold  my-5">{{quiz_title}}</h1>
   {% if questions %}
-    <form action="/score" method="post">
+    <form action={{url_for("score", quiz_number=quiz_number)}} method="post">
         <div class="row">
         {% for question in questions %}
         <div class="col-lg-4">
@@ -67,7 +67,7 @@
             </div>
             </div>
             <div class="col-12 my-3">
-                <select class="form-control" name={{question.0}} id={{question.1}}>
+                <select class="form-control" name={{loop.index}} id={{loop.index}}>
                     <option>What is the correct answer?</option>
                     <option value="a">Letter A</option>
                     <option value="b">Letter B</option>

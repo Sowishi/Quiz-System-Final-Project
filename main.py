@@ -27,16 +27,13 @@ def take():
         return render_template("take.html", quizzes = res)
 
 
-@app.route("/take-quiz/<int:quiz_number>",  methods=["POST", "GET"])
+@app.route("/take-quiz/<int:quiz_number>",  methods=["GET"])
 def takeQuiz(quiz_number):
     db = get_db()
     cursor = db.cursor()
 
-    if(request.method == "POST"):
-        return render_template("score.html")
-
-
     if(request.method == "GET"):
+        quiz_title = request.args.get('quizTitle', default='', type=str)
         cursor.execute( '''
             CREATE TABLE IF NOT EXISTS questions (
                 id INTEGER PRIMARY KEY,
@@ -50,7 +47,7 @@ def takeQuiz(quiz_number):
             );
         ''')
         res = cursor.execute(f"SELECT * FROM questions WHERE quizID = {quiz_number}").fetchall()
-        return render_template("take-quiz.html", quiz_number = quiz_number, questions=res)
+        return render_template("take-quiz.html", quiz_number = quiz_number, questions=res, quiz_title=quiz_title)
     
 @app.route("/create-quiz", methods=["POST", "GET"])
 def createQuiz():
@@ -128,9 +125,30 @@ def editQuiz(quiz_number):
         res = cursor.execute(f"SELECT * FROM questions WHERE quizID = {quiz_number}").fetchall()
         return render_template('edit-quiz.html', quiz_number=quiz_number, questions = res)
     
-@app.route("/score", methods=["POST", "GET"])
-def score():
-    return render_template("score.html")
+@app.route("/score/<int:quiz_number>", methods=["POST", "GET"])
+def score(quiz_number):
+    db = get_db()
+    cursor = db.cursor()
+    if(request.method == "POST"):
+        res = cursor.execute(f"SELECT * FROM questions WHERE quizID = {quiz_number}").fetchall()
+
+        numberOfQuestions = len(res)
+        answers = []
+        rightAnswers = []
+        score = 0
+
+        for i in range(1, numberOfQuestions + 1):
+            answers.append(request.form.get(str(i)))
+
+        for question in res:
+            rightAnswers.append(question[7])
+
+
+        for x in range(len(answers)):
+            if(answers[x] == rightAnswers[x]):
+                score += 1        
+
+        return render_template("score.html", score=score, numberOfQuestions=numberOfQuestions, questions=res)
 
 
 # Database Connection
