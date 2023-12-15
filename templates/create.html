@@ -14,9 +14,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 my-5" id="staticBackdropLabel">
-            Create Quiz
-          </h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Quiz</h1>
           <button
             type="button"
             class="btn-close"
@@ -65,8 +63,11 @@
   {% if quizzes %}
   <div class="row">
     {% for quiz in quizzes %}
-    <div class="col-lg-4">
-      <div class="card" style="width: 18rem; background: {{bgColor()}}">
+    <div class="col-lg-4 d-flex justify-content-center align-items-center my-3">
+      <div
+        class="card shadow-lg"
+        style="width: 18rem; background: {{bgColor()}}"
+      >
         <div class="card-body text-white">
           <h5 class="card-title">{{quiz.1}}</h5>
           <p class="card-text">{{quiz.2}}</p>
