@@ -67,9 +67,15 @@ def createQuiz():
         
         return render_template("create.html", quizzes = res)
 
-@app.route("/edit-quiz/<int:quiz_number>")
+@app.route("/edit-quiz/<int:quiz_number>", methods=["POST", "GET"])
 def editQuiz(quiz_number):
-    return render_template('edit-quiz.html', quiz_number=quiz_number)
+
+    if(request.method == "POST"):
+        print("test")
+
+    if(request.method  == "GET"):
+        return render_template('edit-quiz.html', quiz_number=quiz_number)
+    
 
 # Database Connection
 def get_db():
