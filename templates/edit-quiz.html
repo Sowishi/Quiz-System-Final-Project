@@ -63,6 +63,14 @@
   <div class="row">
     {% for question in questions %}
     <div class="col-lg-4">
+      <div class="w-100 d-flex justify-content-end align-items-center mb-3">
+        <a
+          class="btn btn-danger"
+          href="/delete-question/{{question.0}}/{{question.1}}"
+          >Delete Question</a
+        >
+      </div>
+
       <div class="form-group p-3 border border-secondary rounded">
         <h5>{{question.2}}</h5>
       </div>

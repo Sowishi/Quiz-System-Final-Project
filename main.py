@@ -42,7 +42,18 @@ def delete(id):
     db.commit()
     return redirect(url_for("createQuiz", quizzes = res, bgColor=generate_random_color))
 
-        
+
+@app.route("/delete-question/<int:id>/<int:quizID>", methods=["GET"])
+def deleteQuestion(id, quizID):
+    db = get_db()
+    cursor = db.cursor()
+
+    print(id)
+   
+    cursor.execute(f"DELETE FROM questions where id = {id}")
+
+    db.commit()
+    return redirect(url_for('editQuiz', quiz_number=quizID))
     
 
 @app.route("/take",  methods=["POST", "GET"])
