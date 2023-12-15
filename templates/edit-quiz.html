@@ -3,7 +3,10 @@
 <div class="container my-5">
   <h3 class="text-center fw-bold my-5">QUIZ #ID {{quiz_number}}</h3>
 
-  <form action="/edit-quiz" method="post">
+  <form
+    action="{{ url_for('editQuiz', quiz_number=quiz_number) }}"
+    method="post"
+  >
     <h2>Add Question</h2>
     <div class="form-group">
       <textarea
@@ -41,7 +44,7 @@
     </div>
     <div class="row">
       <div class="col-6 d-flex justify-content-center align-items-center">
-        <select class="form-control">
+        <select class="form-control" name="answer" id="answer">
           <option>What is the correct answer?</option>
           <option value="a">Letter A</option>
           <option value="b">Letter B</option>
@@ -56,119 +59,70 @@
   </form>
 
   <h1 class="text-center fw-bold display-3 my-5">Quizzes</h1>
+  {% if questions %}
   <div class="row">
+    {% for question in questions %}
     <div class="col-lg-4">
-      <h2>Question</h2>
-      <div class="form-group">
-        <textarea
-          name="question"
-          class="form-control"
-          id="question"
-          rows="3"
-        ></textarea>
+      <div class="form-group p-3 border border-secondary rounded">
+        <h5>{{question.2}}</h5>
       </div>
       <div class="row my-3">
         <div class="col-6">
           <div class="form-group">
             <label for="exampleInputPassword1">Choice A</label>
-            <input type="text" class="form-control" name="a" id="a" />
+            <input
+              value="{{question.3}}"
+              type="text"
+              class="form-control {% if question.7 == 'a' %}bg-success text-white fw-bold{% endif %}"
+              name="a"
+              id="a"
+            />
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label for="exampleInputPassword1">Choice B</label>
-            <input type="text" class="form-control" name="b" id="b" />
+            <input
+              value="{{question.4}}"
+              type="text"
+              class="form-control {% if question.7 == 'b' %}bg-success text-white fw-bold{% endif %}"
+              name="b"
+              id="b"
+            />
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label for="exampleInputPassword1">Choice C</label>
-            <input type="text" class="form-control" name="c" id="c" />
+            <input
+              value="{{question.5}}"
+              type="text"
+              class="form-control {% if question.7 == 'c' %}bg-success text-white fw-bold{% endif %}"
+              name="c"
+              id="c"
+            />
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label for="exampleInputPassword1">Choice D</label>
-            <input type="text" class="form-control" name="d" id="d" />
+            <input
+              value="{{question.6}}"
+              type="text"
+              class="form-control {% if question.7 == 'd' %}bg-success text-white fw-bold{% endif %}"
+              name="d"
+              id="d"
+            />
           </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-4">
-      <h2>Question</h2>
-      <div class="form-group">
-        <textarea
-          name="question"
-          class="form-control"
-          id="question"
-          rows="3"
-        ></textarea>
-      </div>
-      <div class="row my-3">
-        <div class="col-6">
-          <div class="form-group">
-            <label for="exampleInputPassword1">Choice A</label>
-            <input type="text" class="form-control" name="a" id="a" />
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <label for="exampleInputPassword1">Choice B</label>
-            <input type="text" class="form-control" name="b" id="b" />
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <label for="exampleInputPassword1">Choice C</label>
-            <input type="text" class="form-control" name="c" id="c" />
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <label for="exampleInputPassword1">Choice D</label>
-            <input type="text" class="form-control" name="d" id="d" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4">
-      <h2>Question</h2>
-      <div class="form-group">
-        <textarea
-          name="question"
-          class="form-control"
-          id="question"
-          rows="3"
-        ></textarea>
-      </div>
-      <div class="row my-3">
-        <div class="col-6">
-          <div class="form-group">
-            <label for="exampleInputPassword1">Choice A</label>
-            <input type="text" class="form-control" name="a" id="a" />
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <label for="exampleInputPassword1">Choice B</label>
-            <input type="text" class="form-control" name="b" id="b" />
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <label for="exampleInputPassword1">Choice C</label>
-            <input type="text" class="form-control" name="c" id="c" />
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <label for="exampleInputPassword1">Choice D</label>
-            <input type="text" class="form-control" name="d" id="d" />
-          </div>
-        </div>
-      </div>
-    </div>
+    {%endfor %}
   </div>
+
+  {% else %}
+  <p>No questions available.</p>
+  {% endif %}
 </div>
 
 {%endblock %}

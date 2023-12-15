@@ -4,7 +4,7 @@
   <!-- Modal -->
   <div
     class="modal fade"
-    id="createQuestion"
+    id="createQuiz"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
@@ -24,7 +24,26 @@
         </div>
         <div class="modal-body">
           <form method="post" action="create-quiz">
-            <h1>TEst</h1>
+            <input
+              type="text"
+              class="form-control"
+              name="title"
+              id="title"
+              placeholder="Enter your quiz title"
+            />
+            <textarea
+              name="description"
+              class="form-control my-3"
+              id="description"
+              rows="3"
+              placeholder="Description of the quiz"
+            ></textarea>
+
+            <div
+              class="w-100 d-flex justify-content-end align-items-center mt-3"
+            >
+              <button type="submit" class="btn btn-primary">Create Quiz</button>
+            </div>
           </form>
         </div>
       </div>
@@ -36,7 +55,7 @@
       type="button"
       class="btn btn-success"
       data-bs-toggle="modal"
-      data-bs-target="#createQuestion"
+      data-bs-target="#createQuiz"
     >
       Create Quiz
     </button>
@@ -51,7 +70,7 @@
           <p class="card-text">{{quiz.2}}</p>
           <a
             href="{{ url_for('editQuiz', quiz_number=quiz.0) }}"
-            class="btn btn-primary"
+            class="btn btn-warning"
             >Add quizzes</a
           >
         </div>

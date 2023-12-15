@@ -1,5 +1,27 @@
 {% extends "base.html" %} {% block content %}
 
-<h1>This is a take quiz a screen</h1>
+<div class="container mt-5">
+  {% if quizzes %}
+  <div class="row">
+    {% for quiz in quizzes %}
+    <div class="col-lg-4">
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">{{quiz.1}}</h5>
+          <p class="card-text">{{quiz.2}}</p>
+          <a
+            href="{{ url_for('editQuiz', quiz_number=quiz.0) }}"
+            class="btn btn-primary"
+            >Take Quiz!</a
+          >
+        </div>
+      </div>
+    </div>
+    {%endfor %}
+  </div>
 
+  {% else %}
+  <p>No quizzes available.</p>
+  {% endif %}
+</div>
 {%endblock %}

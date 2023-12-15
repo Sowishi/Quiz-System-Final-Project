@@ -9,33 +9,22 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-@app.route("/create", methods=['GET', 'POST'])
-def create():
-    if request.method == "POST":
-        question = request.form.get("question")
-        a = request.form.get("a")
-        b = request.form.get("b")
-        c = request.form.get("c")
-        d = request.form.get("d")
-        questionWithAnswer = {
-            "question": question,
-            "a":a,
-            "b": b,
-            "c": c,
-            "d": d
-        }
 
-        print(questionWithAnswer)
-
-
-        return render_template('create.html')
-    elif request.method == "GET":
-        return render_template('create.html')
-
-@app.route("/take")
+@app.route("/take",  methods=["POST", "GET"])
 def take():
-    return render_template('take.html')
-
+    db = get_db()
+    cursor = db.cursor()
+    if(request.method == "GET"):
+        cursor.execute( '''
+            CREATE TABLE IF NOT EXISTS quizzes (
+                id INTEGER PRIMARY KEY,
+                quizTitle TEXT,
+                description TEXT
+            );
+        ''')
+        res = cursor.execute("SELECT * FROM quizzes").fetchall()
+        
+        return render_template("take.html", quizzes = res)
 
 @app.route("/create-quiz", methods=["POST", "GET"])
 def createQuiz():
@@ -69,12 +58,50 @@ def createQuiz():
 
 @app.route("/edit-quiz/<int:quiz_number>", methods=["POST", "GET"])
 def editQuiz(quiz_number):
-
+    db = get_db()
+    cursor = db.cursor()
     if(request.method == "POST"):
-        print("test")
+        cursor.execute( '''
+            CREATE TABLE IF NOT EXISTS questions (
+                id INTEGER PRIMARY KEY,
+                quizID INT,
+                question TEXT,
+                a TEXT,
+                b TEXT,
+                c TEXT,
+                d TEXT,
+                answer TEXT
+            );
+        ''')
+        question = request.form.get("question")
+        a = request.form.get("a")
+        b = request.form.get("b")
+        c = request.form.get("c")
+        d = request.form.get("d")
+        answer  = request.form.get("answer")
+        cursor.execute('''
+        INSERT INTO questions (quizID, question, a, b, c, d, answer)
+        VALUES (?, ?, ?, ?, ?, ?, ?);''', (quiz_number, question, a, b, c, d, answer))
+        db.commit()
+        return redirect(url_for('editQuiz', quiz_number=quiz_number))
+
 
     if(request.method  == "GET"):
-        return render_template('edit-quiz.html', quiz_number=quiz_number)
+        cursor.execute( '''
+            CREATE TABLE IF NOT EXISTS questions (
+                id INTEGER PRIMARY KEY,
+                quizID INT,
+                question TEXT,
+                a TEXT,
+                b TEXT,
+                c TEXT,
+                d TEXT,
+                answer TEXT
+            );
+        ''')
+        res = cursor.execute(f"SELECT * FROM questions WHERE quizID = {quiz_number}").fetchall()
+        print(res)
+        return render_template('edit-quiz.html', quiz_number=quiz_number, questions = res)
     
 
 # Database Connection
