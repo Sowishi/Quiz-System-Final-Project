@@ -4,7 +4,7 @@
   <!-- Modal -->
   <div
     class="modal fade"
-    id="createQuiz"
+    id="createQuestion"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
@@ -24,18 +24,7 @@
         </div>
         <div class="modal-body">
           <form method="post" action="create-quiz">
-            <input
-              type="text"
-              class="form-control"
-              name="title"
-              id="title"
-              placeholder="Enter your quiz title"
-            />
-            <div
-              class="w-100 d-flex justify-content-end align-items-center mt-3"
-            >
-              <button type="submit" class="btn btn-primary">Create Quiz</button>
-            </div>
+            <h1>TEst</h1>
           </form>
         </div>
       </div>
@@ -47,26 +36,43 @@
       type="button"
       class="btn btn-success"
       data-bs-toggle="modal"
-      data-bs-target="#createQuiz"
+      data-bs-target="#createQuestion"
     >
       Create Quiz
     </button>
   </div>
+  {% if quizzes %}
   <div class="row">
+    {% for quiz in quizzes %}
     <div class="col-lg-4">
       <div class="card" style="width: 18rem">
-        <img class="card-img-top" src="..." alt="Card image cap" />
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">{{quiz.1}}</h5>
+          <p class="card-text">{{quiz.2}}</p>
+          <a
+            href="{{ url_for('editQuiz', quiz_number=quiz.0) }}"
+            class="btn btn-primary"
+            >Add quizzes</a
+          >
         </div>
       </div>
     </div>
+    {%endfor %}
   </div>
+
+  {% else %}
+  <p>No quizzes available.</p>
+  {% endif %}
+
+  <!-- {% if quizzes %}
+  <ul>
+    {% for quiz in quizzes %}
+    <li class="text-danger">{{ quiz.0 }} - {{ quiz.1 }} - {{ quiz.2 }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No quizzes available.</p>
+  {% endif %} -->
 
   <!-- <form style="min-width: 300px" action="/create" method="post">
     <h2>Question</h2>

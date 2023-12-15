@@ -1,9 +1,7 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, g, redirect
 import sqlite3
 
 app = Flask(__name__)
-conn = sqlite3.connect('quiz-app.db')
-cursor = conn.cursor()
 
 
 
@@ -41,30 +39,51 @@ def take():
 
 @app.route("/create-quiz", methods=["POST", "GET"])
 def createQuiz():
-    if request.method == "POST":
-   
+    db = get_db()
+    cursor = db.cursor()
+    if(request.method == "POST"):
         title = request.form.get("title")
-
-        # Create the table if it doesn't exist
-        cursor.execute("""
+        description = request.form.get("description")
+        cursor.execute( '''
             CREATE TABLE IF NOT EXISTS quizzes (
                 id INTEGER PRIMARY KEY,
-                quizTitle TEXT NOT NULL
+                quizTitle TEXT,
+                description TEXT
             );
-        """)
+        ''')
+        cursor.execute( "INSERT INTO quizzes (quizTitle, description) VALUES (?, ?);", (title, description))
+        db.commit()
+        return redirect(url_for('createQuiz'))
 
-        # Insert the quiz title using a parameterized query
-        cursor.execute(f"INSERT INTO quizzes (quizTitle) VALUES ({title})")
+    if(request.method == "GET"):
+        cursor.execute( '''
+            CREATE TABLE IF NOT EXISTS quizzes (
+                id INTEGER PRIMARY KEY,
+                quizTitle TEXT,
+                description TEXT
+            );
+        ''')
+        res = cursor.execute("SELECT * FROM quizzes").fetchall()
+        
+        return render_template("create.html", quizzes = res)
 
-        # Commit the changes to the database
-        conn.commit()
+@app.route("/edit-quiz/<int:quiz_number>")
+def editQuiz(quiz_number):
+    return render_template('edit-quiz.html', quiz_number=quiz_number)
 
-        return render_template("create.html")
-    else:
-        return render_template("create.html")
+# Database Connection
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect("quiz-app.db")
+        # db.row_factory = sqlite3.Row
+    return db
 
-
-
+# close database
+def close_db(error):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
 
 
 
