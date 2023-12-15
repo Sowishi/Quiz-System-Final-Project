@@ -26,6 +26,32 @@ def take():
         
         return render_template("take.html", quizzes = res)
 
+
+@app.route("/take-quiz/<int:quiz_number>",  methods=["POST", "GET"])
+def takeQuiz(quiz_number):
+    db = get_db()
+    cursor = db.cursor()
+
+    if(request.method == "POST"):
+        return render_template("score.html")
+
+
+    if(request.method == "GET"):
+        cursor.execute( '''
+            CREATE TABLE IF NOT EXISTS questions (
+                id INTEGER PRIMARY KEY,
+                quizID INT,
+                question TEXT,
+                a TEXT,
+                b TEXT,
+                c TEXT,
+                d TEXT,
+                answer TEXT
+            );
+        ''')
+        res = cursor.execute(f"SELECT * FROM questions WHERE quizID = {quiz_number}").fetchall()
+        return render_template("take-quiz.html", quiz_number = quiz_number, questions=res)
+    
 @app.route("/create-quiz", methods=["POST", "GET"])
 def createQuiz():
     db = get_db()
@@ -100,9 +126,12 @@ def editQuiz(quiz_number):
             );
         ''')
         res = cursor.execute(f"SELECT * FROM questions WHERE quizID = {quiz_number}").fetchall()
-        print(res)
         return render_template('edit-quiz.html', quiz_number=quiz_number, questions = res)
     
+@app.route("/score", methods=["POST", "GET"])
+def score():
+    return render_template("score.html")
+
 
 # Database Connection
 def get_db():

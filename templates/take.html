@@ -10,7 +10,7 @@
           <h5 class="card-title">{{quiz.1}}</h5>
           <p class="card-text">{{quiz.2}}</p>
           <a
-            href="{{ url_for('editQuiz', quiz_number=quiz.0) }}"
+            href="{{ url_for('takeQuiz', quiz_number=quiz.0, quizTitle=quiz.1) }}"
             class="btn btn-primary"
             >Take Quiz!</a
           >
