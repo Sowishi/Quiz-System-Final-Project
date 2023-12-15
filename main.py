@@ -24,7 +24,25 @@ def login():
     return redirect(url_for('home', invalid=True))
 
 
+@app.route("/delete/<int:id>", methods=["GET"])
+def delete(id):
+    db = get_db()
+    cursor = db.cursor()
 
+    cursor.execute(f"DELETE FROM quizzes where id = {id} ")
+    cursor.execute(f"DELETE FROM questions where quizID = {id} ")
+    cursor.execute( '''
+        CREATE TABLE IF NOT EXISTS quizzes (
+            id INTEGER PRIMARY KEY,
+            quizTitle TEXT,
+            description TEXT
+        );
+    ''')
+    res = cursor.execute("SELECT * FROM quizzes").fetchall()
+    db.commit()
+    return redirect(url_for("createQuiz", quizzes = res, bgColor=generate_random_color))
+
+        
     
 
 @app.route("/take",  methods=["POST", "GET"])
