@@ -2,7 +2,7 @@
 
 <div
   class="container-fluid d-flex justify-content-center align-items-center flex-column"
-  style="height: 85vh"
+  style="min-height: 85vh"
 >
   <h1 class="fw-bold display-1">
     Score: <span class="text-success"> {{score}}</span> /
@@ -14,7 +14,10 @@
     {% if questions %}
     <div class="row">
       {% for question in questions %}
+
       <div class="col-lg-4">
+        <h5>Question #{{loop.index}}</h5>
+
         <div class="form-group p-3 border border-secondary rounded">
           <h5>{{question.2}}</h5>
         </div>
@@ -24,7 +27,7 @@
               <label for="exampleInputPassword1">Choice A</label>
               <input
                 disabled
-                value="{{question.3}}"
+                value="{{question.3}} {% if question.7 == 'a' %} ✅ {% endif %}"
                 type="text"
                 class="form-control {% if question.7 == 'a' %}bg-success text-white fw-bold{% endif %}"
                 name="a"
@@ -37,7 +40,7 @@
               <label for="exampleInputPassword1">Choice B</label>
               <input
                 disabled
-                value="{{question.4}}"
+                value="{{question.4}} {% if question.7 == 'b' %} ✅ {% endif %}"
                 type="text"
                 class="form-control {% if question.7 == 'b' %}bg-success text-white fw-bold{% endif %}"
                 name="b"
@@ -50,7 +53,7 @@
               <label for="exampleInputPassword1">Choice C</label>
               <input
                 disabled
-                value="{{question.5}}"
+                value="{{question.5}} {% if question.7 == 'c' %} ✅ {% endif %}"
                 type="text"
                 class="form-control {% if question.7 == 'c' %}bg-success text-white fw-bold{% endif %}"
                 name="c"
@@ -63,7 +66,7 @@
               <label for="exampleInputPassword1">Choice D</label>
               <input
                 disabled
-                value="{{question.6}}"
+                value="{{question.6}} {% if question.7 == 'd' %} ✅ {% endif %}"
                 type="text"
                 class="form-control {% if question.7 == 'd' %}bg-success text-white fw-bold{% endif %}"
                 name="d"

@@ -10,7 +10,8 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     invalid = request.args.get('invalid', default='', type=str)
-    return render_template('index.html', invalid=invalid)
+    image_url = url_for('static', filename='bg.jpg')
+    return render_template('index.html', invalid=invalid, bg=image_url)
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -195,6 +196,17 @@ def score(quiz_number):
         for x in range(len(answers)):
             if(answers[x] == rightAnswers[x]):
                 score += 1        
+
+        cursor.execute("""
+         CREATE TABLE IF NOT EXISTS scores (
+                id INTEGER PRIMARY KEY,
+                quizID INT,
+                highScore INT
+            );
+        """)
+
+        cursor.execute( "INSERT INTO scores (quizID, highScore) VALUES (?, ?);", (quiz_number, score))
+        db.commit()
 
         return render_template("score.html", score=score, numberOfQuestions=numberOfQuestions, questions=res)
 

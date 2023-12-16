@@ -107,7 +107,7 @@
         <a
           class="btn btn-danger"
           href="/delete-question/{{question.0}}/{{question.1}}"
-          >Delete Question</a
+          >Delete Question 🗑️</a
         >
       </div>
 
@@ -120,7 +120,7 @@
             <label for="exampleInputPassword1">Choice A</label>
             <input
               disabled
-              value="{{question.3}}"
+              value="{{question.3}} {% if question.7 == 'a' %} ✅ {% endif %}"
               type="text"
               class="form-control {% if question.7 == 'a' %}bg-success text-white fw-bold{% endif %}"
               name="a"
@@ -133,7 +133,7 @@
             <label for="exampleInputPassword1">Choice B</label>
             <input
               disabled
-              value="{{question.4}}"
+              value="{{question.4}} {% if question.7 == 'b' %} ✅ {% endif %}"
               type="text"
               class="form-control {% if question.7 == 'b' %}bg-success text-white fw-bold{% endif %}"
               name="b"
@@ -146,7 +146,7 @@
             <label for="exampleInputPassword1">Choice C</label>
             <input
               disabled
-              value="{{question.5}}"
+              value="{{question.5}} {% if question.7 == 'c' %} ✅ {% endif %}"
               type="text"
               class="form-control {% if question.7 == 'c' %}bg-success text-white fw-bold{% endif %}"
               name="c"
@@ -159,7 +159,7 @@
             <label for="exampleInputPassword1">Choice D</label>
             <input
               disabled
-              value="{{question.6}}"
+              value="{{question.6}}  {% if question.7 == 'd' %} ✅ {% endif %}"
               type="text"
               class="form-control {% if question.7 == 'd' %}bg-success text-white fw-bold{% endif %}"
               name="d"
