@@ -7,13 +7,14 @@
         <div class="row">
         {% for question in questions %}
         <div class="col-lg-4">
+            <h5>Question #{{loop.index}}</h5>
         <div class="form-group p-3 border border-secondary rounded">
             <h5>{{question.2}}</h5>
         </div>
         <div class="row my-3">
             <div class="col-6">
             <div class="form-group">
-                <label for="exampleInputPassword1">Choice A</label>
+                <label for="exampleInputPassword1">Letter A</label>
                 <input
                 disabled
                 value="{{question.3}}"
@@ -26,7 +27,7 @@
             </div>
             <div class="col-6">
             <div class="form-group">
-                <label for="exampleInputPassword1">Choice B</label>
+                <label for="exampleInputPassword1">Letter B</label>
                 <input
                 disabled
                 value="{{question.4}}"
@@ -40,7 +41,7 @@
             </div>
             <div class="col-6">
             <div class="form-group">
-                <label for="exampleInputPassword1">Choice C</label>
+                <label for="exampleInputPassword1">Letter C</label>
                 <input
                 disabled
                 value="{{question.5}}"
@@ -54,7 +55,7 @@
             </div>
             <div class="col-6">
             <div class="form-group">
-                <label for="exampleInputPassword1">Choice D</label>
+                <label for="exampleInputPassword1">Letter D</label>
                 <input
                 disabled
                 value="{{question.6}}"
