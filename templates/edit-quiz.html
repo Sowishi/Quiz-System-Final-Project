@@ -1,66 +1,106 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="container my-5">
-  <h3 class="text-center fw-bold my-5">QUIZ #ID {{quiz_number}}</h3>
-
-  <form
-    action="{{ url_for('editQuiz', quiz_number=quiz_number) }}"
-    method="post"
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="createQuiz"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
   >
-    <h2>Add Question</h2>
-    <div class="form-group">
-      <textarea
-        name="question"
-        class="form-control"
-        id="question"
-        rows="3"
-      ></textarea>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Add Question!
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            action="{{ url_for('editQuiz', quiz_number=quiz_number) }}"
+            method="post"
+          >
+            <h2>Add Question</h2>
+            <div class="form-group">
+              <textarea
+                name="question"
+                class="form-control"
+                id="question"
+                rows="3"
+              ></textarea>
+            </div>
+            <div class="row my-3">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Choice A</label>
+                  <input type="text" class="form-control" name="a" id="a" />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Choice B</label>
+                  <input type="text" class="form-control" name="b" id="b" />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Choice C</label>
+                  <input type="text" class="form-control" name="c" id="c" />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Choice D</label>
+                  <input type="text" class="form-control" name="d" id="d" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div
+                class="col-6 d-flex justify-content-center align-items-center"
+              >
+                <select class="form-control" name="answer" id="answer">
+                  <option>What is the correct answer?</option>
+                  <option value="a">Letter A</option>
+                  <option value="b">Letter B</option>
+                  <option value="c">Letter C</option>
+                  <option value="d">Letter D</option>
+                </select>
+              </div>
+              <div
+                class="col-6 d-flex justify-content-center align-items-center"
+              >
+                <button class="btn btn-success">Add Question!</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="row my-3">
-      <div class="col-6">
-        <div class="form-group">
-          <label for="exampleInputPassword1">Choice A</label>
-          <input type="text" class="form-control" name="a" id="a" />
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="form-group">
-          <label for="exampleInputPassword1">Choice B</label>
-          <input type="text" class="form-control" name="b" id="b" />
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="form-group">
-          <label for="exampleInputPassword1">Choice C</label>
-          <input type="text" class="form-control" name="c" id="c" />
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="form-group">
-          <label for="exampleInputPassword1">Choice D</label>
-          <input type="text" class="form-control" name="d" id="d" />
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6 d-flex justify-content-center align-items-center">
-        <select class="form-control" name="answer" id="answer">
-          <option>What is the correct answer?</option>
-          <option value="a">Letter A</option>
-          <option value="b">Letter B</option>
-          <option value="c">Letter C</option>
-          <option value="d">Letter D</option>
-        </select>
-      </div>
-      <div class="col-6 d-flex justify-content-center align-items-center">
-        <button class="btn btn-success">Add Question!</button>
-      </div>
-    </div>
-  </form>
+  </div>
 
-  <h1 class="text-center fw-bold display-3 my-5">Quizzes</h1>
+  <div class="w-100 d-flex justify-content-end align-items-center">
+    <button
+      type="button"
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#createQuiz"
+    >
+      Add Question!
+    </button>
+  </div>
+
   {% if questions %}
-  <div class="row">
+  <div class="row mt-3">
     {% for question in questions %}
     <div class="col-lg-4">
       <div class="w-100 d-flex justify-content-end align-items-center mb-3">
@@ -133,7 +173,9 @@
   </div>
 
   {% else %}
-  <p>No questions available.</p>
+  <div class="container d-flex justify-content-center align-items-center">
+    <h2 class="text-left my-5">No questions available yet! 😭</h2>
+  </div>
   {% endif %}
 </div>
 

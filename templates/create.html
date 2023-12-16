@@ -60,6 +60,8 @@
       Create Quiz
     </button>
   </div>
+  <h1>Created Quizzes 🚀</h1>
+  <div class="line bg-primary my-3" style="width: 100px; height: 5px"></div>
   {% if quizzes %}
   <div class="row">
     {% for quiz in quizzes %}
@@ -71,13 +73,21 @@
         <div class="card-body text-white">
           <h5 class="card-title">{{quiz.1}}</h5>
           <p class="card-text">{{quiz.2}}</p>
-          <a
-            href="{{ url_for('editQuiz', quiz_number=quiz.0) }}"
-            class="btn btn-warning"
-            >Add quizzes</a
-          >
-
-          <a href="/delete/{{quiz.0}}" class="btn btn-danger">Delete Quiz!</a>
+          <div class="row">
+            <div class="col-6">
+              <a
+                href="{{ url_for('editQuiz', quiz_number=quiz.0) }}"
+                class="btn btn-warning w-100"
+                style="font-size: smaller"
+                >Add Quiz ➕</a
+              >
+            </div>
+            <div class="col-6">
+              <a href="/delete/{{quiz.0}}" class="btn btn-danger w-100"
+                >Delete🗑️</a
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -85,7 +95,9 @@
   </div>
 
   {% else %}
-  <p>No quizzes available.</p>
+  <div class="container d-flex justify-content-center align-items-center">
+    <h2 class="text-left my-5">No quizzes available yet! 😭</h2>
+  </div>
   {% endif %}
 
   <!-- {% if quizzes %}

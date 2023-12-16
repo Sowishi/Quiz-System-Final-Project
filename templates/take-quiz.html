@@ -1,7 +1,9 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="container my-5">
-  <h1 class="text-center fw-bold  my-5">{{quiz_title}}</h1>
+  <h1 class="text-left fw-bold mb-0">{{quiz_title}}</h1>
+  <div class="line bg-primary my-3" style="width: 100px; height: 5px"></div>
+
   {% if questions %}
     <form action={{url_for("score", quiz_number=quiz_number)}} method="post">
         <div class="row">
@@ -85,7 +87,9 @@
   </div>
 
   {% else %}
-  <p>No questions available.</p>
+  <div class="container d-flex justify-content-center align-items-center">
+    <h2 class="text-left my-5">No questions available yet! 😭</h2>
+  </div>
   {% endif %}
 </div>
 
